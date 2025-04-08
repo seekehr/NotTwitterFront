@@ -1,16 +1,34 @@
 
-import { Layout } from "@/components/Layout";
+import React from 'react';
+import Sidebar from '../components/Sidebar';
+import Home from './Home';
+import Explore from './Explore';
+import TrendingTopics from '../components/TrendingTopics';
+import { useLocation } from 'react-router-dom';
 
-const Index = () => {
+const Index: React.FC = () => {
+  const location = useLocation();
+  
+  const renderMainContent = () => {
+    const path = location.pathname;
+    if (path === '/explore') {
+      return <Explore />;
+    }
+    return <Home />;
+  };
+
   return (
-    <Layout>
-      <div className="p-4 border-b border-sidebar-border">
-        <h1 className="font-bold text-xl">Home</h1>
-      </div>
-      <div className="p-4">
-        <p className="text-gray-500">Welcome to NotTwitter! Start your journey by following people and sharing your thoughts.</p>
-      </div>
-    </Layout>
+    <div className="min-h-screen bg-retro-light-gray flex">
+      <Sidebar />
+      
+      <main className="flex-1 flex border-l-2 border-black">
+        {renderMainContent()}
+        
+        <div className="hidden lg:block w-80 p-4 border-l-2 border-black">
+          <TrendingTopics />
+        </div>
+      </main>
+    </div>
   );
 };
 

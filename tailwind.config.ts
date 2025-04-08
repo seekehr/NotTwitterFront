@@ -1,4 +1,4 @@
-// @ts-ignore
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -62,6 +62,17 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				retro: {
+					blue: '#84C5E0',
+					teal: '#8FD8D2',
+					pink: '#FFDEE2',
+					purple: '#E5DEFF',
+					yellow: '#FEF7CD',
+					green: '#F2FCE2',
+					gray: '#EAEAEA',
+					'light-gray': '#F5F5F5',
+					'dark-gray': '#888888'
 				}
 			},
 			borderRadius: {
@@ -85,11 +96,24 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+				blink: {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'cursor-blink': 'blink 1s step-start infinite',
+			},
+			fontFamily: {
+				'pixel': ['"Press Start 2P"', 'cursive'],
+				'retro': ['"VT323"', 'monospace'],
+			},
+			boxShadow: {
+				'retro': '2px 2px 0px 0px rgba(0,0,0,0.3)',
+				'retro-lg': '4px 4px 0px 0px rgba(0,0,0,0.3)',
 			}
 		}
 	},
