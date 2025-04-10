@@ -54,7 +54,7 @@ export default function LoginPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label className="block font-mono text-blue-900 mb-2" htmlFor="email">
-                            Gmail
+                            Email
                         </label>
                         <input
                             type="email"
