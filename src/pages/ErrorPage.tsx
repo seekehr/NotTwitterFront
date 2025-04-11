@@ -40,14 +40,14 @@ function ErrorPage({ error, link }: ErrorPageProp) {
                     </h2>
                     <pre className="font-mono text-sm text-red-300 whitespace-pre-wrap">
             Error: {error}
-          </pre>
+                    </pre>
                 </div>
 
                 {/* Suggestions */}
                 <div className="space-y-4">
                     <div className="bg-red-900/30 border border-red-800 rounded-lg p-4">
                         <h3 className="text-lg font-semibold text-red-200 mb-2 flex items-center gap-2">
-                            <span className="text-red-500">●</span> Possible Solutions
+                            <span className="text-red-500">●</span> More Information
                         </h3>
                         <ul className="list-disc list-inside space-y-2 text-red-300">
                             <li> Link: {link} </li>
@@ -72,7 +72,7 @@ function ErrorPage({ error, link }: ErrorPageProp) {
 
                 {/* Footer */}
                 <footer className="mt-8 text-center text-red-400 text-sm">
-                        <p>Click anywhere to dismiss</p>
+                    <p>Click anywhere to dismiss</p>
                 </footer>
             </div>
         </div>

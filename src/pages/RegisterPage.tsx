@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ArrowLeft, CheckCircle2, XCircle} from 'lucide-react';
 import {Link, redirect} from 'react-router-dom';
-import {DOMAIN} from "../lib/utils.ts";
+import {DOMAIN, getCookie} from "../lib/utils.ts";
 import { useNavigate } from 'react-router-dom';
 import HomePage from "@/pages/HomePage.tsx";
 import ErrorPage from "@/pages/ErrorPage.tsx";
@@ -10,6 +10,13 @@ import ErrorProp from "@/lib/types/ErrorProp.ts";
 type FormErrorState = 'success' | 'error' | 'not_typed';
 
 export default function RegisterPage() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (getCookie("token")) {
+            navigate("/");
+        }
+    }, []);
+
     const [formData, setFormData] = useState({
         displayName: '',
         username: '',
@@ -81,7 +88,7 @@ export default function RegisterPage() {
         }
     };
 
-    const navigate = useNavigate();
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (formData.displayName.length < 6 || formData.displayName.length > 50 || !verifyDisplayName(formData.displayName)) {
@@ -100,8 +107,8 @@ export default function RegisterPage() {
                             setFatalError("Cookies could not be loaded.");
                         }
                     }).catch((error) => {
-                    setFatalError(error.message);
-                });
+                        setFatalError(error.message);
+                    });
             } else {
                 setError("Username must be unique.");
             }
@@ -187,23 +194,6 @@ export default function RegisterPage() {
                             </div>
 
                             <div>
-                                <label className="block font-mono text-blue-900 mb-2" htmlFor="email">
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    pattern=".*@gmail\.com"
-                                    placeholder="example@gmail.com"
-                                    className="w-full px-4 py-2 font-mono border-2 border-blue-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required
-                                />
-                            </div>
-
-                            <div>
                                 <label className="block font-mono text-blue-900 mb-2" htmlFor="password">
                                     Password
                                 </label>
@@ -283,7 +273,11 @@ function verifyName(username: string): boolean {
         return false;
     }
 
-    return /^(?=.*[a-zA-Z])(?!.* {2})[a-zA-Z0-9_]+$/.test(username);
+    if (username === 'Loading...' || username === 'trending') {
+        return false;
+    }
+
+    return /^(?!.*[A-Z])(?!.* {2})[a-z0-9_]+$/.test(username);
 }
 
 function verifyDisplayName(name: string): boolean {
@@ -312,7 +306,7 @@ async function register(displayName: string, username: string, password: string)
         }
     } else {
         if ('token' in data) {
-            document.cookie = "token=" + data.token.substring(10) + ";";
+            document.cookie = "token=" + data.token + ";" + "path=/; max-age=1209600"; // 2 weeks
             return;
         }
     }
